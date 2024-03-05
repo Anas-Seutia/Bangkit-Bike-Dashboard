@@ -61,36 +61,64 @@ weather_df = create_weather_df(main_df)
 # Plot number of daily rides
 st.subheader('Daily Rides')
 
+# Set up the figure size and style
 fig, ax = plt.subplots(figsize=(16, 8))
+sns.set(style="whitegrid")  # Set the seaborn style
+
+# Plot the data
 ax.plot(
     daily_rides_df["dteday"],
     daily_rides_df["total_rides"],
-    marker='o', 
+    marker='o',
     linewidth=2,
     color="#90CAF9"
 )
-ax.tick_params(axis='y', labelsize=20)
-ax.tick_params(axis='x', labelsize=15)
+
+# Set the title and labels
+ax.set_title('Average Bike Rentals per Month', fontsize=20)
+ax.set_xlabel('Month', fontsize=16)
+ax.set_ylabel('Average Rentals', fontsize=16)
+
+ax.tick_params(axis='x', rotation=45)
+ax.tick_params(axis='y', labelsize=12)
+
+ax.set_yticks(range(0, 10000, 500))
+ax.set_ylim(bottom=0)
+
+ax.set_xlim([daily_rides_df["dteday"].min(), daily_rides_df["dteday"].max()])
+
+ax.grid(True)
 
 st.pyplot(fig)
+
 
 # Plot rides by weather condition
 st.subheader('Rides by Weather Condition')
 
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(8, 5))
+sns.set(style="whitegrid")  # Set the seaborn style
+
 sns.barplot(
-    x="weather_condition",
-    y="total_rides",
-    data=weather_df,
-    palette="Blues_d",
+    x=weather_df['weather_condition'],
+    y=weather_df['total_rides'],
+    hue=weather_df['weather_condition'],
+    palette='muted',
     ax=ax
 )
-ax.set_ylabel("Total Rides")
-ax.set_xlabel("Weather Condition")
+
+ax.set_title('Average Bike Rentals by Weather Condition', fontsize=18)
+ax.set_xlabel('Weather Condition', fontsize=15)
+ax.set_ylabel('Average Rentals', fontsize=15)
+
+ax.set_ylim(0, weather_df['total_rides'].max() + 0.5e6)
+
 ax.tick_params(axis='x', labelsize=12)
 ax.tick_params(axis='y', labelsize=12)
 
+ax.grid(axis='y', linestyle='--', alpha=0.7)
+
 st.pyplot(fig)
+
 
 
 st.caption('By Anas Banta Seutia - for Bangkit :)')
