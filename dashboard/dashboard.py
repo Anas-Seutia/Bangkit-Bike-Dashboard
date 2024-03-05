@@ -110,7 +110,7 @@ ax.set_title('Average Bike Rentals by Weather Condition', fontsize=18)
 ax.set_xlabel('Weather Condition', fontsize=15)
 ax.set_ylabel('Average Rentals', fontsize=15)
 
-ax.set_ylim(0, weather_df['total_rides'].max() + 0.5e6)
+ax.set_ylim(0, weather_df['total_rides'].max() + 0.5e6) 
 
 ax.tick_params(axis='x', labelsize=12)
 ax.tick_params(axis='y', labelsize=12)
